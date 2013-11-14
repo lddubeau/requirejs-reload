@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8"/>
+    <script type="text/javascript" src="js/require.js"></script>
+  </head>
+  <body>
+    <p id="contents">Nothing loaded.</p>
+    <button id="reload">Reload</button>
+    <script>
+      require.config({
+          baseUrl: "./js",
+          paths: {
+              jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min',
+          }
+      });
+      require(["jquery"], function ($) {
+          var $contents = $("#contents");
+          function reload() {
+              require.undef("text!../file.html");
+              require(["text!../file.html"], function (file) {
+                  $contents.empty();
+                  $contents.append(file);
+              });
+          }
+          $("#reload").click(reload);
+      });
+    </script>
+  </body>
+</html>
